@@ -4,7 +4,6 @@ import com.microdevs.ticketservice.data.entity.Ticket;
 import com.microdevs.ticketservice.data.mapper.TicketMapper;
 import com.microdevs.ticketservice.data.repository.TicketRepository;
 import com.microdevs.ticketservice.internal.dto.TicketDto;
-import com.microdevs.ticketservice.web.controller.dto.CreateTicket;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

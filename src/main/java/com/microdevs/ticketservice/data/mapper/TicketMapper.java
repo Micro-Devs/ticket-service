@@ -3,7 +3,6 @@ package com.microdevs.ticketservice.data.mapper;
 import com.microdevs.ticketservice.data.entity.Ticket;
 import com.microdevs.ticketservice.internal.dto.TicketDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.math.BigDecimal;

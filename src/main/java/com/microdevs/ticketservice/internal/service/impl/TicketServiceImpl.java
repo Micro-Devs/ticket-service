@@ -3,6 +3,7 @@ package com.microdevs.ticketservice.internal.service.impl;
 import com.microdevs.ticketservice.client.dto.EventDto;
 import com.microdevs.ticketservice.client.service.EventServiceClient;
 import com.microdevs.ticketservice.data.service.TicketDataService;
+import com.microdevs.ticketservice.exception.EventNotFoundException;
 import com.microdevs.ticketservice.exception.UserNotFoundException;
 import com.microdevs.ticketservice.internal.dto.TicketDto;
 import com.microdevs.ticketservice.internal.service.TicketService;
@@ -15,7 +16,6 @@ import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -42,7 +42,7 @@ public class TicketServiceImpl implements TicketService {
                 .map(EventDto::getPrice);
 
         return price.orElseThrow(() ->
-                 new UserNotFoundException(ExceptionUtil.EVENT_NOT_FOUND.getMessage()
+                 new EventNotFoundException(ExceptionUtil.EVENT_NOT_FOUND.getMessage()
                         , ExceptionUtil.EVENT_NOT_FOUND.getCode()
                         ,MessageUtil.getMessageDetail(MessageUtil.EVENT_NOT_FOUND_WITH_ID, eventId))
         );
