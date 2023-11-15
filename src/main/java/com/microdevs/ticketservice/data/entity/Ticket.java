@@ -20,11 +20,12 @@ import java.util.UUID;
 @Table(name = "ticket", schema = "ticket")
 public class Ticket {
     @Id
-    @GeneratedValue(generator = "ticket_sequence", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "ticket_sequence", sequenceName = "ticket_sequence", allocationSize = 1)
-    private UUID id;
+    @Column(name = "guid", nullable = false)
+    private UUID guid = UUID.randomUUID();
+    @Column(name = "billingNo", nullable = false)
     private String billingNo;
+    @Column(name = "price", nullable = false, precision = 7, scale = 2)
     private BigDecimal price;
-    @NotNull
+    @Column(name = "status", nullable = false)
     private StatusType status = StatusType.ACTIVE;
 }
