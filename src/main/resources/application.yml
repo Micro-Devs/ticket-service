@@ -20,7 +20,6 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.JsonSerializer
 
-
 eureka:
   client:
     service-url:
@@ -29,6 +28,23 @@ eureka:
 application:
   title: Ticket Service
   version: 1.0
+#properties
+kafka:
+  topic:
+    name: "ticket-activity"
+    partition: 3
+  broker: "2"
+
+feign:
+  client:
+    event:
+      name: "event"
+      url: "http://localhost:9001"
+      path: "/getAllEvents"
+    user:
+      name: "user"
+      url: "http://localhost:9004"
+      path: "/getAllUsers"
 
 server:
   port: 9007
