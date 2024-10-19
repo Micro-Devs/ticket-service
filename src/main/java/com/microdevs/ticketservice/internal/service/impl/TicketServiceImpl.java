@@ -7,7 +7,7 @@ import com.microdevs.ticketservice.exception.EventNotFoundException;
 import com.microdevs.ticketservice.exception.UserNotFoundException;
 import com.microdevs.ticketservice.internal.dto.TicketDto;
 import com.microdevs.ticketservice.internal.service.TicketService;
-import com.microdevs.ticketservice.producer.mapper.ProducerMapper;
+import com.microdevs.ticketservice.producer.dto.EventDetailDto;
 import com.microdevs.ticketservice.producer.service.TicketProducerService;
 import com.microdevs.ticketservice.util.ExceptionUtil;
 import com.microdevs.ticketservice.util.MessageUtil;
@@ -25,13 +25,13 @@ public class TicketServiceImpl implements TicketService {
     private final EventServiceClient eventServiceClient;
     private final TicketDataService dataService;
     private final TicketProducerService producerService;
-    private final ProducerMapper producerMapper;
 
-    public TicketServiceImpl(EventServiceClient eventServiceClient, TicketDataService dataService, TicketProducerService producerService, ProducerMapper producerMapper) {
+
+    public TicketServiceImpl(EventServiceClient eventServiceClient, TicketDataService dataService, TicketProducerService producerService) {
         this.eventServiceClient = eventServiceClient;
         this.dataService = dataService;
         this.producerService = producerService;
-        this.producerMapper = producerMapper;
+
     }
 
     @Override
@@ -40,8 +40,12 @@ public class TicketServiceImpl implements TicketService {
         TicketDto createdTicket=  dataService.create(isEventValidAndGetPrice(createTicket.getEventId())
                 ,billingNoGenerator());
 
-        producerService.produce(producerMapper.toProducer(createTicket.getEventId(),createTicket.getUserId()
-                ,createdTicket.getId()));
+        EventDetailDto producerDTO = new EventDetailDto();
+        producerDTO.setUuid(createdTicket.getId());
+        producerDTO.setEventId(createTicket.getEventId());
+        producerDTO.setUserId(createTicket.getUserId());
+
+        producerService.produce(producerDTO);
 
         return createdTicket;
 

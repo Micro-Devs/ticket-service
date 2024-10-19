@@ -1,10 +1,7 @@
 package com.microdevs.ticketservice.internal.dto;
 
 import com.microdevs.baseservice.enums.StatusType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 import java.math.BigDecimal;
@@ -14,6 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class TicketDto {
     private UUID id;
     private String billingNo;
