@@ -13,13 +13,44 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: none
-
   kafka:
+    bootstrap-servers:
+      - kafka1:9092
+      - kafka2:9093
+    consumer:
+      group-id: ticket-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
     producer:
-      bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    listener:
+      concurrency: 3
+    template:
+      default-topic: ticket-activity
 
+
+
+#  kafka:
+#    producer:
+#      bootstrap-servers: kafka1:9092,kafka2:9093
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+#  kafka:
+#    producer:
+#      bootstrap-servers: kafka1:9092,kafka2:9093
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+#    consumer:
+#      bootstrap-servers: kafka1:9092,kafka2:9093
+#      group-id: ticket-service-group
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      auto-offset-reset: earliest
+#    listener:
+#      missing-topics-fatal: false
 
 eureka:
   client:
@@ -29,6 +60,22 @@ eureka:
 application:
   title: Ticket Service
   version: 1.0
+#properties
+#kafka:
+#  topicName: "ticket-activity"
+#  topicPartition: 3
+#  broker: 2
+
+feign:
+  client:
+    event:
+      name: "event"
+      url: "http://localhost:9001"
+      path: "/getAllEvents"
+    user:
+      name: "user"
+      url: "http://localhost:9004"
+      path: "/getAllUsers"
 
 server:
   port: 9007

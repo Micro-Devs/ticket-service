@@ -29,3 +29,4 @@ public class Ticket {
     @Column(name = "status", nullable = false)
     private StatusType status = StatusType.ACTIVE;
 }
+
