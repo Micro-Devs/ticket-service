@@ -15,8 +15,7 @@ spring:
       ddl-auto: none
   kafka:
     bootstrap-servers:
-      - kafka1:9092
-      - kafka2:9093
+      - localhost:9099
     consumer:
       group-id: ticket-service-group
       auto-offset-reset: earliest
